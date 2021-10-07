@@ -1,19 +1,49 @@
 <template>
 	<div id="app">
 		<h1>Super Quiz</h1>
+		<Question
+			v-if="questionMode"
+			:questions="questions[currentQuestion]"
+			@response="showResult"
+		/>
 		<Result
+			v-else
 			:result="result"
+			@nextQuestion="next"
 		/>
 	</div>
 </template>
 
 <script>
 import Result from './components/Result.vue'
+import questions from './util/questions'
+import Question from './components/Question.vue'
+
 export default {
-	components: {Result},
+	components: {Result, Question},
 	data () {
 		return {
-			result: true
+			result: true,
+			questionMode: true,
+			questions,
+			currentQuestion: 0,
+			questionResponse: []
+		}
+	}, 
+	methods: {
+		showResult(value){
+			this.questionMode = false
+			this.result = value
+		},	
+		next(value){
+			if(value){
+				this.currentQuestion = this.getRandom(questions.length)
+				this.questionResponse.push(this.currentQuestion)
+				this.questionMode = true
+			}
+		},
+		getRandom(max){
+			return Math.floor(Math.random() * max)
 		}
 	}
 }
