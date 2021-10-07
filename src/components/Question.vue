@@ -1,12 +1,24 @@
 <template>
     <div class="question">
-        
+        {{questions.text}}
+        <ul class="answers">
+            <li v-for="(answers, i) in questions.answers" :key="i" @click="$emit('response', answers.correct)">
+                <span class="number">{{i + 1}}</span>
+                <span class="text">{{answers.text}}</span>
+            </li>
+        </ul>
     </div>
 </template>
 
 <script>
 export default {
-    
+    props: {
+		questions: {
+            type: Object,
+            Required: true
+        }        
+    },
+    methods:{}
 }
 </script>
 
