@@ -6,6 +6,7 @@
                 <span class="number">{{i + 1}}</span>
                 <span class="text">{{answers.text}}</span>
                 <div>teste</div>
+                <span>teste2</span>
             </li>
         </ul>
     </div>
