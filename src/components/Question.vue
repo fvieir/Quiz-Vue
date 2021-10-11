@@ -5,8 +5,6 @@
             <li v-for="(answers, i) in questions.answers" :key="i" @click="$emit('response', answers.correct)">
                 <span class="number">{{i + 1}}</span>
                 <span class="text">{{answers.text}}</span>
-                <div>teste</div>
-                <div>teste2</div>
             </li>
         </ul>
     </div>

@@ -1,16 +1,18 @@
 <template>
 	<div id="app">
 		<h1>Super Quiz</h1>
-		<Question
-			v-if="questionMode"
-			:questions="questions[currentQuestion]"
-			@response="showResult"
-		/>
-		<Result
-			v-else
-			:result="result"
-			@nextQuestion="next"
-		/>
+		<transition name="flip" mode="out-in">
+			<Question
+				v-if="questionMode"
+				:questions="questions[currentQuestion]"
+				@response="showResult"
+			/>
+			<Result 
+				v-else
+				:result="result"
+				@confirmed="nextQuestion"
+			/>
+		</transition>
 	</div>
 </template>
 
@@ -35,7 +37,7 @@ export default {
 			this.questionMode = false
 			this.result = value
 		},	
-		next(value){
+		nextQuestion(value){
 			if(value){
 				this.currentQuestion = this.getRandom(questions.length)
 				this.questionResponse.push(this.currentQuestion)
@@ -73,13 +75,13 @@ body {
 }
 
 @keyframes flip-out {
-	from { transform: rotateY(0deg); }
+	from { transform: rotateY(0deg) ; }
 	to { transform: rotateY(90deg); }
 }
 
 @keyframes flip-in {
 	from { transform: rotateY(90deg); }
-	to { transform: rotateY(0deg); }
+	to {transform: rotateY(0deg);}
 }
 
 .flip-enter-active {
@@ -89,4 +91,5 @@ body {
 .flip-leave-active {
 	animation: flip-out 0.3s ease;
 }
+
 </style>
